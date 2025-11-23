@@ -21,36 +21,34 @@
 
   <body>
     <!-- Navigation -->
-    <nav class="nav-section">
-      <div class="nav-container nav-with-logo">
-        <!-- LOGO INSIDE NAV -->
-        <a href="index.html" class="nav-logo">
-          <img src="OneAlphaMed_Logo.png" alt="OneAlphaMed Logo" />
-        </a>
+<nav class="nav-section" role="navigation" aria-label="Main navigation">
+  <div class="nav-container nav-with-logo">
 
-        <a
-          href="index.html"
-          class="nav-tab"
-          id="eventsTab"
-        >
-          <span><strong>Events</strong></span>
-        </a>
-        <a
-          href="booths.html"
-          class="nav-tab active"
-          id="boothsTab"
-        >
-          <span><strong>Booths</strong></span>
-        </a>
-        <a
-          href="engagement.html"
-          class="nav-tab"
-          id="engagementTab"
-        >
-          <span><strong>Engagement</strong></span>
-        </a>
+    <!-- LOGO INSIDE NAV -->
+    <a href="index.html" class="nav-logo">
+      <img src="OneAlphaMed_Logo.png" alt="OneAlphaMed Logo" />
+    </a>
+
+    <!-- Hamburger / toggle (mobile) -->
+    <button class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Toggle navigation">
+      <span class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </span>
+    </button>
+
+    <!-- Links container (desktop shows inline, mobile becomes dropdown) -->
+    <div class="nav-links-wrapper">
+      <div id="primary-navigation" class="nav-links" role="menu">
+        <a href="index.html" class="nav-tab" id="eventsTab" role="menuitem"><span><strong>Events</strong></span></a>
+        <a href="booths.html" class="nav-tab active" id="boothsTab" role="menuitem"><span><strong>Booths</strong></span></a>
+        <a href="engagement.html" class="nav-tab" id="engagementTab" role="menuitem"><span><strong>Engagement</strong></span></a>
       </div>
-    </nav>
+    </div>
+
+  </div>
+</nav>
 
     <!-- Hero Section -->
     <section
