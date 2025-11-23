@@ -20,26 +20,35 @@
   </head>
 
   <body>
-    <!-- Navigation -->
-    <nav class="nav-section">
-      <div class="nav-container nav-with-logo">
+<!-- Navigation -->
+<nav class="nav-section" role="navigation" aria-label="Main navigation">
+  <div class="nav-container nav-with-logo">
 
-        <!-- LOGO INSIDE NAV -->
-        <a href="index.html" class="nav-logo">
-          <img src="OneAlphaMed_Logo.png" alt="OneAlphaMed Logo" />
-        </a>
+    <!-- LOGO INSIDE NAV -->
+    <a href="index.html" class="nav-logo">
+      <img src="OneAlphaMed_Logo.png" alt="OneAlphaMed Logo" />
+    </a>
 
-        <a href="index.html" class="nav-tab active" id="eventsTab">
-          <span><strong>Events</strong></span>
-        </a>
-        <a href="booths.html" class="nav-tab" id="boothsTab">
-          <span><strong>Booths</strong></span>
-        </a>
-        <a href="engagement.html" class="nav-tab" id="engagementTab">
-          <span><strong>Engagement</strong></span>
-        </a>
+    <!-- Hamburger / toggle (mobile) -->
+    <button class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Toggle navigation">
+      <span class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </span>
+    </button>
+
+    <!-- Links container (desktop shows inline, mobile becomes dropdown) -->
+    <div class="nav-links-wrapper">
+      <div id="primary-navigation" class="nav-links" role="menu">
+        <a href="index.html" class="nav-tab active" id="eventsTab" role="menuitem"><span><strong>Events</strong></span></a>
+        <a href="booths.html" class="nav-tab" id="boothsTab" role="menuitem"><span><strong>Booths</strong></span></a>
+        <a href="engagement.html" class="nav-tab" id="engagementTab" role="menuitem"><span><strong>Engagement</strong></span></a>
       </div>
-    </nav>
+    </div>
+
+  </div>
+</nav>
 
     <!-- Hero Section -->
     <section
@@ -395,7 +404,7 @@
   <div class="image-grid card-grid">
     <div class="image-item card">
       <div class="card-media">
-        <img src="pulse 1.jpeg" alt="PULSE Stage Setup" />
+        <img src="pulse-1.jpeg" alt="PULSE Stage Setup" />
       </div>
       <div class="card-info">
         <div class="card-title">Stage Setup</div>
@@ -407,7 +416,7 @@
 
     <div class="image-item card">
       <div class="card-media">
-        <img src="pulse 2.jpeg" alt="PULSE Audience Session" />
+        <img src="pulse-2.jpeg" alt="PULSE Audience Session" />
       </div>
       <div class="card-info">
         <div class="card-title">Audience Session</div>
@@ -536,7 +545,7 @@
             <div class="image-item card">
               <div class="card-media">
                 <video autoplay muted loop playsinline>
-                  <source src="BHF_1.mp4" type="video/mp4" />
+                  <source src="Videos/BHF_1.mp4" type="video/mp4" />
                 </video>
               </div>
               <div class="card-info">
@@ -650,4 +659,3 @@
     <script src="script.js"></script>
   </body>
 </html>
-
