@@ -72,3 +72,60 @@ if (window.elementSdk) {
 
 // Initialize with default config for standalone usage
 onConfigChange(defaultConfig);
+
+// Ensure script runs after DOM loaded
+document.addEventListener('DOMContentLoaded', function () {
+  const nav = document.querySelector('.nav-section');
+  const toggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  const focusableLinks = navLinks ? navLinks.querySelectorAll('a') : [];
+
+  // Scroll handler to add/remove scrolled class (same behavior you mentioned)
+  function updateNavBackground() {
+    if (window.scrollY > 40) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  }
+  updateNavBackground();
+  window.addEventListener('scroll', updateNavBackground);
+
+  // Mobile toggle handler
+  if (toggle && navLinks) {
+    toggle.addEventListener('click', function (e) {
+      const isOpen = this.classList.toggle('open');
+      navLinks.classList.toggle('open', isOpen);
+      // set aria-expanded on the button for screen readers
+      this.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function (e) {
+      if (!nav.contains(e.target) && navLinks.classList.contains('open')) {
+        navLinks.classList.remove('open');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Close on ESC
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+        navLinks.classList.remove('open');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.focus();
+      }
+    });
+
+    // Optional: collapse after clicking a nav link (mobile)
+    focusableLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (navLinks.classList.contains('open')) {
+          navLinks.classList.remove('open');
+          toggle.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  }
+});
+
