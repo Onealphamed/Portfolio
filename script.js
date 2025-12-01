@@ -128,4 +128,75 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+/* script.js
+   Auto Cloudinary replacer for images
+   - Set CLOUDINARY_CLOUD to your cloud name (example: 'dbvgtr8ao')
+   - If you uploaded images into a folder in Cloudinary, set CLOUDINARY_FOLDER to 'foldername/' (include trailing slash).
+   - If some images DO NOT share the same filename between your site and Cloudinary, see "Optional: data-mapping" below.
+*/
+
+(function () {
+  const CLOUDINARY_CLOUD = 'dbvgtr8ao';        // <-- put your cloud name here
+  const CLOUDINARY_FOLDER = '';                // <-- e.g. 'events/' or '' if you used root
+
+  if (!CLOUDINARY_CLOUD) {
+    console.warn('Cloudinary replacer: no CLOUDINARY_CLOUD set.');
+    return;
+  }
+
+  // Treat these as local-looking srcs (we will replace these)
+  function isLocalImageSrc(src) {
+    if (!src) return false;
+    src = src.trim();
+    // skip data URIs and full URLs
+    if (/^data:|^https?:\/\//i.test(src)) return false;
+    // treat as local if it ends with a common image extension
+    return /[A-Za-z0-9_\-\/]+\.(jpg|jpeg|png|webp|gif)$/i.test(src);
+  }
+
+  function buildCloudinaryUrl(filename) {
+    // encode each part but keep slashes for subfolders in filename
+    // Cloudinary public id is usually filename (including any subfolder segments)
+    const encoded = filename.split('/').map(encodeURIComponent).join('/');
+    return `https://res.cloudinary.com/${CLOUDINARY_CLOUD}/image/upload/${CLOUDINARY_FOLDER}${encoded}`;
+  }
+
+  // 1) Replace images where src is local
+  document.querySelectorAll('img').forEach(img => {
+    try {
+      const cur = img.getAttribute('src') || '';
+      if (isLocalImageSrc(cur)) {
+        // Keep last path segment as filename if you prefer, but this allows src="images/foo.jpg"
+        const filename = cur.split('/').pop();
+        const cloudUrl = buildCloudinaryUrl(filename);
+        img.setAttribute('src', cloudUrl);
+        img.setAttribute('loading', 'lazy');
+        // for debugging: keep original
+        img.setAttribute('data-original-src', cur);
+      }
+    } catch (err) {
+      // don't break the page for a single failure
+      console.error('Cloudinary replacer error for img:', img, err);
+    }
+  });
+
+  // 2) Optional: replace <img data-cloudinary="publicIdOrFilename.jpg"> directly (explicit mapping)
+  // This is useful when Cloudinary public id is different from your local filename.
+  document.querySelectorAll('img[data-cloudinary]').forEach(img => {
+    try {
+      const id = img.getAttribute('data-cloudinary').trim();
+      if (id) {
+        const cloudUrl = buildCloudinaryUrl(id);
+        img.setAttribute('src', cloudUrl);
+        img.setAttribute('loading', 'lazy');
+        img.setAttribute('data-original-src', img.getAttribute('src') || '');
+      }
+    } catch (err) {
+      console.error('Cloudinary data-cloudinary replacer error:', err);
+    }
+  });
+
+})();
+
+
 
